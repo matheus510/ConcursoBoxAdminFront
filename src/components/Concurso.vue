@@ -76,7 +76,7 @@
               ></v-text-field>
               <v-flex sm12 d-flex>
                 <span class="display-1 py-4">
-                  Informações do Concurso
+                  Informações sobre o regulamento
                 </span>
               </v-flex>
               <span class="title py-4">
