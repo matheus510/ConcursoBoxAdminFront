@@ -1,4 +1,4 @@
-import createLogger from '../../../src/plugins/logger'
+import createLogger from '../plugins/logger'
 import concurso from './modules/concurso'
 import usuario from './modules/usuario'
 
@@ -9,7 +9,7 @@ Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     activeConcursos: [],
     finishedConcursos: []
@@ -21,3 +21,6 @@ export default new Vuex.Store({
   strict: debug,
   plugins: debug ? [createLogger()] : []
 })
+export default {
+  store
+}

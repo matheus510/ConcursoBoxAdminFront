@@ -1,6 +1,8 @@
 import types from '../types'
 import axios from 'axios'
 
+const namespaced = true
+
 const state = {
   nomeConcurso: '',
   realizadores: [],
@@ -44,6 +46,7 @@ const mutations = {
 }
 
 export default {
+  namespaced,
   state,
   getters,
   actions,

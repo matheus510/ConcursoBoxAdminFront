@@ -1,4 +1,4 @@
-import { deepCopy } from '../util'
+import deepcopy from 'deepcopy'
 
 export default function createLogger ({
   collapsed = true,
@@ -8,13 +8,13 @@ export default function createLogger ({
   logger = console
 } = {}) {
   return store => {
-    let prevState = deepCopy(store.state)
+    let prevState = deepcopy(store.state)
 
     store.subscribe((mutation, state) => {
       if (typeof logger === 'undefined') {
         return
       }
-      const nextState = deepCopy(state)
+      const nextState = deepcopy(state)
 
       if (filter(mutation, prevState, nextState)) {
         const time = new Date()
