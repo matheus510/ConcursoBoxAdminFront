@@ -1,70 +1,79 @@
 <template>
   <v-container fluid grid-list-sm>
     <v-layout row wrap class="py-4 px-4">
-      <v-flex d-flex xs12>
+      <v-flex d-flex>
         <v-layout row wrap>
           <v-flex d-flex>
-            <span class="display-2 pt-4 px-4">
+            <span class="display-1 pt-4 px-4">
               Bem vindo,
             </span>
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex d-flex xs12 sm10 class="py-4">
+      <v-flex d-flex xs12 class="py-4">
         <v-layout row wrap class="px-4">
-          <v-flex sm5 d-flex>
-            <span class="display-1 py-4">
+          <v-flex d-flex>
+            <span class="headline py-4">
               Concursos em Andamento
             </span>
           </v-flex>
-          <v-flex sm7 d-flex>
+          <v-flex xs12 d-flex>
             <v-data-table
               :headers="concursosEmAndamentoHeaders"
-              :items="concursosEmAndamento"
+              :items="concursosAtivos"
               hide-actions
               class="elevation-1"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.name }}</td>
-                <td class="text-xs-right">{{ props.item.dataInicio }}</td>
-                <td class="text-xs-right">{{ props.item.dataTermino }}</td>
-                <td class="text-xs-right">{{ props.item.participantes }}</td>
-                <td class="text-xs-right">{{ props.item.editar }}</td>
-                <td class="text-xs-right">{{ props.item.excluir }}</td>
+                <td>{{ props.item.nome }}</td>
+                <td>{{ props.item.dataInicio }}</td>
+                <td>{{ props.item.dataTermino }}</td>
+                <td>{{ props.item.participantes }}</td>
+                <td class="layout px-0">
+                  <v-btn icon class="mx-0" :to="`/Concurso/${props.item.id}`">
+                    <v-icon color="primary">edit</v-icon>
+                  </v-btn>
+                  <v-btn icon class="mx-0" @click="deleteConcurso(props.item)">
+                    <v-icon color="secondary">delete</v-icon>
+                  </v-btn>
+                </td>
               </template>
             </v-data-table>
           </v-flex>
+          <v-flex xs12>
+            <div class="pa-4">
+              <v-btn medium dark color="primary">
+                Criar novo concurso
+                <v-icon right dark>add_circle_outline</v-icon>
+              </v-btn>
+            </div>
+          </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex sm2 xs12>
-        <div class="px-4 py-4">
-          <v-btn fab dark color="primary">
-            <v-icon dark>add_circle_outline</v-icon>
-          </v-btn>
-          <label>Criar novo concurso</label>
-        </div>
-      </v-flex>
-      <v-flex d-flex xs12 sm10 class="py-4">
+      <v-flex d-flex xs12 class="py-4">
         <v-layout row wrap class="px-4">
-          <v-flex sm5 d-flex>
-            <span class="display-1 py-4">
+          <v-flex xs12 d-flex>
+            <span class="headline py-4">
               Concursos Terminados
             </span>
           </v-flex>
-          <v-flex sm7 d-flex>
+          <v-flex xs12 d-flex>
             <v-data-table
               :headers="concursosTerminadosHeaders"
-              :items="concursosTerminados"
+              :items="concursosAtivos"
               hide-actions
               class="elevation-1"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.name }}</td>
-                <td class="text-xs-right">{{ props.item.dataInicio }}</td>
-                <td class="text-xs-right">{{ props.item.dataTermino }}</td>
-                <td class="text-xs-right">{{ props.item.participantes }}</td>
-                <td class="text-xs-right">{{ props.item.editar }}</td>
-                <td class="text-xs-right">{{ props.item.excluir }}</td>
+                <td>{{ props.item.nome }}</td>
+                <td>{{ props.item.dataInicio }}</td>
+                <td>{{ props.item.dataTermino }}</td>
+                <td>{{ props.item.participantes }}</td>
+                <td>
+                  <v-btn icon class="mx-0" @click="deleteConcurso(props.item.editar)">
+                    <v-icon color="secondary">delete</v-icon>
+                  </v-btn>
+                </td>
               </template>
             </v-data-table>
           </v-flex>
@@ -82,68 +91,61 @@ export default {
           text: 'Concursos',
           align: 'left',
           sortable: false,
-          value: 'name'
+          value: 'nome'
         },
-        { text: 'dataInicio', value: 'dataInicio', sortable: false },
-        { text: 'dataTermino', value: 'dataTermino', sortable: false },
-        { text: 'participantes', value: 'participantes', sortable: false },
-        { text: 'editar', value: 'editar', sortable: false },
-        { text: 'excluir', value: 'excluir', sortable: false }
+        { text: 'Data de Início', value: 'dataInicio', sortable: false },
+        { text: 'Data de Término', value: 'dataTermino', sortable: false },
+        { text: 'Participantes', value: 'participantes', sortable: false },
+        { text: 'Ações', value: '', sortable: false }
       ],
-      concursosEmAndamento: [
-        {
-          value: false,
-          name: 'Concurso SOS Mata Atlântica',
-          dataInicio: '01/01/2022',
-          dataTermino: '01/01/2023',
-          participantes: 568,
-          editar: '',
-          excluir: ''
-        },
-        {
-          value: false,
-          name: 'Concurso SOS Cerrado',
-          dataInicio: '01/01/2022',
-          dataTermino: '01/01/2023',
-          participantes: 568,
-          editar: '',
-          excluir: ''
-        }
-      ],
+      concursosEmAndamento: [],
       concursosTerminadosHeaders: [
         {
           text: 'Concursos',
           align: 'left',
           sortable: false,
-          value: 'name'
+          value: 'nome'
         },
-        { text: 'dataInicio', value: 'dataInicio', sortable: false },
-        { text: 'dataTermino', value: 'dataTermino', sortable: false },
-        { text: 'participantes', value: 'participantes', sortable: false },
-        { text: 'editar', value: 'editar', sortable: false },
-        { text: 'excluir', value: 'excluir', sortable: false }
+        { text: 'Data de Início', value: 'dataInicio', sortable: false },
+        { text: 'Data de Término', value: 'dataTermino', sortable: false },
+        { text: 'Participantes', value: 'participantes', sortable: false },
+        { text: 'Ações', value: '', sortable: false }
       ],
       concursosTerminados: [
         {
           value: false,
-          name: 'Concurso SOS Mata Atlântica',
+          id: '5b153a54de017e0696e533d4',
+          nome: 'Concurso SOS Mata Atlântica',
           dataInicio: '01/01/2022',
           dataTermino: '01/01/2023',
-          participantes: 568,
-          editar: '',
-          excluir: ''
+          participantes: 568
         },
         {
           value: false,
-          name: 'Concurso SOS Cerrado',
+          id: '5b153a54de017e0696e533d4',
+          nome: 'Concurso SOS Cerrado',
           dataInicio: '01/01/2022',
           dataTermino: '01/01/2023',
-          participantes: 568,
-          editar: '',
-          excluir: ''
+          participantes: 568
         }
       ]
     }
+  },
+  computed: {
+    concursosAtivos () {
+      return this.$store.store.getters['GET_CONCURSOS']
+    }
+  },
+  methods: {
+    editConcurso (concurso) {
+
+    },
+    deleteConcurso (event) {
+      console.log(event)
+    }
+  },
+  beforeCreate () {
+    this.$store.store.dispatch('GET_CONCURSOS')
   }
 }
 </script>
