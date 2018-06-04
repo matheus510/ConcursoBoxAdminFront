@@ -1,12 +1,7 @@
 import axios from 'axios'
 import types from '../types'
-function axiosHelper (token) {
-  return axios.create({
-    headers: {
-      'authorization': token
-    }
-  })
-}
+import axiosInstance from '../../plugins/axiosInstance'
+
 const namespaced = true
 
 const state = {
@@ -25,7 +20,7 @@ const getters = {
 
 const actions = {
   [types.SET_TOKEN]: ({ commit }, payload) => {
-    axiosHelper(payload.token).get('http://localhost:5000/api/usuarios/login')
+    axiosInstance(payload.token).get('http://localhost:5000/api/usuarios/login')
       .then(function (response) {
         if (response.data.authorized) {
           commit(types.SET_TOKEN, response.data)

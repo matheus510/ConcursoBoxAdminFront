@@ -4,44 +4,31 @@ import axios from 'axios'
 const namespaced = true
 
 const state = {
-  nomeConcurso: '',
-  realizadores: [],
-  patrocinadores: [],
-  contatoRealizador: {
-    nomeResponsável: '',
-    telefone: '',
-    email: ''
-  },
-  regulamentoUrl: '',
-  datas: {
-    inicioInscricao: '',
-    fimInscricao: '',
-    divulgacaoPremio: ''
-  },
-  fasesDeAvaliacao: [],
-  camposParticipantes: {}
+  currentConcurso: {}
 }
 
 const getters = {
-  [types.GET_CURRENT_CONCURSO]: state => state
+  [types.GET_CURRENT_CONCURSO]: state => state.currentConcurso
 }
 
 const actions = {
-  [types.SET_CURRENT_CONCURSO] ({ commit, payload }) {
-    axios.get('/user?ID=12345')
-      .then(function (response) {
-        console.log(response)
+  [types.SET_CURRENT_CONCURSO]: ({ commit }, payload) => {
+    debugger
+    axios.get(`http://localhost:5000/api/concursos/${payload.concursoId}`)
+      .then(function (res) {
+        commit(`${types.SET_CURRENT_CONCURSO}`, res.data)
       })
-      .catch(function (error) {
-        console.log(error)
+      .catch(function (err) {
+        console.log(err)
       })
-    commit(`${types.SET_CURRENT_CONCURSO}`, payload)
   }
 }
 
 const mutations = {
-  [types.SET_CURRENT_CONCURSO] (state, concurso) {
-    state = concurso
+  [types.SET_CURRENT_CONCURSO] (state, payload) {
+    debugger
+    state.currentConcurso = Object.assign({}, payload)
+    console.log(state.currentConcurso)
   }
 }
 

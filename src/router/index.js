@@ -9,17 +9,17 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/Home',
+      path: '/home',
       name: 'Home',
       component: Home
     },
     {
-      path: '/Concurso/:id',
+      path: '/concurso/edit/:id',
       name: 'EditarConcurso',
       component: EditarConcurso
     },
     {
-      path: '/Concurso/New/',
+      path: '/concurso/new/',
       name: 'Concurso',
       component: NovoConcurso
     }

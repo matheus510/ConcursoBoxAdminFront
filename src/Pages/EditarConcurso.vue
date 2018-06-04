@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ $route.params.id }}
+    {{ currentConcurso ? currentConcurso : 'nao tem nada aqui' }}
   </div>
 </template>
 
@@ -12,8 +12,17 @@ export default {
       concurso: {}
     }
   },
-  beforeCreate () {
-    this.concursoId = this.$route.params.id
+  computed: {
+    currentConcurso () {
+      return this.$store.store.getters['concurso/GET_CURRENT_CONCURSO']
+    }
+  },
+  created () {
+    const currentConcursoId = {
+      concursoId: this.$route.params.id
+    }
+    debugger
+    this.$store.store.dispatch('concurso/SET_CURRENT_CONCURSO', currentConcursoId)
   }
 }
 </script>

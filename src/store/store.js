@@ -1,31 +1,13 @@
 import createLogger from '../plugins/logger'
 import concurso from './modules/concurso'
 import usuario from './modules/usuario'
-import axios from 'axios'
+import axiosInstance from '../plugins/axiosInstance'
 import types from './types'
 
 import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
-
-function axiosHelper (token) {
-  if (token) {
-    return axios.create({
-      headers: {
-        'authorization': token
-      }
-    })
-  }
-  if (!token) {
-    let token = store.getters['usuario/GET_TOKEN']
-    return axios.create({
-      headers: {
-        'authorization': token
-      }
-    })
-  }
-}
 
 const debug = process.env.NODE_ENV !== 'production'
 
@@ -36,8 +18,7 @@ const store = new Vuex.Store({
   },
   actions: {
     [types.GET_CONCURSOS] ({commit}) {
-      debugger
-      axiosHelper().get('http://localhost:5000/api/concursos')
+      axiosInstance().get('http://localhost:5000/api/concursos')
       .then((res) => {
         commit('SET_CONCURSOS', res.data)
       })

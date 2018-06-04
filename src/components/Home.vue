@@ -30,7 +30,7 @@
                 <td>{{ props.item.dataTermino }}</td>
                 <td>{{ props.item.participantes }}</td>
                 <td class="layout px-0">
-                  <v-btn icon class="mx-0" :to="`/Concurso/${props.item.id}`">
+                  <v-btn icon class="mx-0" :to="`/Concurso/edit/${props.item.id}`">
                     <v-icon color="primary">edit</v-icon>
                   </v-btn>
                   <v-btn icon class="mx-0" @click="deleteConcurso(props.item)">
