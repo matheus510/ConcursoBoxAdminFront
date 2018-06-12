@@ -13,7 +13,6 @@ const getters = {
 
 const actions = {
   [types.SET_CURRENT_CONCURSO]: ({ commit }, payload) => {
-    debugger
     axios.get(`http://localhost:5000/api/concursos/${payload.concursoId}`)
       .then(function (res) {
         commit(`${types.SET_CURRENT_CONCURSO}`, res.data)
@@ -26,7 +25,6 @@ const actions = {
 
 const mutations = {
   [types.SET_CURRENT_CONCURSO] (state, payload) {
-    debugger
     state.currentConcurso = Object.assign({}, payload)
     console.log(state.currentConcurso)
   }

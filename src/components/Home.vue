@@ -33,7 +33,7 @@
                   <v-btn icon class="mx-0" :to="`/Concurso/edit/${props.item.id}`">
                     <v-icon color="primary">edit</v-icon>
                   </v-btn>
-                  <v-btn icon class="mx-0" @click="deleteConcurso(props.item)">
+                  <v-btn icon class="mx-0" @click="deleteConcurso(props.item.id)">
                     <v-icon color="secondary">delete</v-icon>
                   </v-btn>
                 </td>
@@ -60,7 +60,7 @@
           <v-flex xs12 d-flex>
             <v-data-table
               :headers="concursosTerminadosHeaders"
-              :items="concursosAtivos"
+              :items="concursosVencidos"
               hide-actions
               class="elevation-1"
             >
@@ -70,7 +70,7 @@
                 <td>{{ props.item.dataTermino }}</td>
                 <td>{{ props.item.participantes }}</td>
                 <td>
-                  <v-btn icon class="mx-0" @click="deleteConcurso(props.item.editar)">
+                  <v-btn icon class="mx-0" @click="deleteConcurso(props.item.id)">
                     <v-icon color="secondary">delete</v-icon>
                   </v-btn>
                 </td>
@@ -98,7 +98,7 @@ export default {
         { text: 'Participantes', value: 'participantes', sortable: false },
         { text: 'Ações', value: '', sortable: false }
       ],
-      concursosEmAndamento: [],
+      concursosEmAndamento: this.concursosAtivos,
       concursosTerminadosHeaders: [
         {
           text: 'Concursos',
@@ -111,41 +111,31 @@ export default {
         { text: 'Participantes', value: 'participantes', sortable: false },
         { text: 'Ações', value: '', sortable: false }
       ],
-      concursosTerminados: [
-        {
-          value: false,
-          id: '5b153a54de017e0696e533d4',
-          nome: 'Concurso SOS Mata Atlântica',
-          dataInicio: '01/01/2022',
-          dataTermino: '01/01/2023',
-          participantes: 568
-        },
-        {
-          value: false,
-          id: '5b153a54de017e0696e533d4',
-          nome: 'Concurso SOS Cerrado',
-          dataInicio: '01/01/2022',
-          dataTermino: '01/01/2023',
-          participantes: 568
-        }
-      ]
+      concursosTerminados: this.concursosVencidos
     }
   },
   computed: {
     concursosAtivos () {
       return this.$store.store.getters['GET_CONCURSOS']
+    },
+    concursosVencidos () {
+      return this.$store.store.getters['GET_FINISHED_CONCURSOS']
     }
   },
   methods: {
     editConcurso (concurso) {
 
     },
-    deleteConcurso (event) {
-      console.log(event)
+    deleteConcurso (id) {
+      this.$store.store.dispatch('DELETE_CONCURSO', id)
+      // Update state
+      this.$store.store.dispatch('GET_CONCURSOS')
+      this.$store.store.dispatch('GET_FINISHED_CONCURSOS')
     }
   },
   beforeCreate () {
     this.$store.store.dispatch('GET_CONCURSOS')
+    this.$store.store.dispatch('GET_FINISHED_CONCURSOS')
   }
 }
 </script>
