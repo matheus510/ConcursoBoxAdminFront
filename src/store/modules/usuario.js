@@ -20,7 +20,7 @@ const getters = {
 
 const actions = {
   [types.SET_TOKEN]: ({ commit }, payload) => {
-    axiosInstance(payload.token).get('http://localhost:5000/api/usuarios/login')
+    axiosInstance(payload.token).get('http://ec2-34-203-198-65.compute-1.amazonaws.com:5000/api/usuarios/login')
       .then(function (response) {
         if (response.data.authorized) {
           commit(types.SET_TOKEN, response.data)
@@ -32,7 +32,7 @@ const actions = {
     })
   },
   [types.CREATE_USER]: ({ commit }, payload) => {
-    axios.post('http://localhost:5000/api/usuarios/', `token=${payload.token}`)
+    axios.post('http://ec2-34-203-198-65.compute-1.amazonaws.com:5000/api/usuarios/', `token=${payload.token}`)
     .then(function (response) {
       commit(types.SET_TOKEN, response)
     })

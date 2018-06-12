@@ -18,21 +18,21 @@ const store = new Vuex.Store({
   },
   actions: {
     [types.GET_CONCURSOS] ({commit}) {
-      axiosInstance().get('http://localhost:5000/api/concursos')
+      axiosInstance().get('http://ec2-34-203-198-65.compute-1.amazonaws.com:5000/api/concursos')
       .then((res) => {
         commit('SET_CONCURSOS', res.data)
       })
       .catch((err) => Promise.reject(err))
     },
     [types.GET_FINISHED_CONCURSOS] ({commit}) {
-      axiosInstance().get('http://localhost:5000/api/concursos/terminados')
+      axiosInstance().get('http://ec2-34-203-198-65.compute-1.amazonaws.com:5000/api/concursos/terminados')
       .then((res) => {
         commit('SET_FINISHED_CONCURSOS', res.data)
       })
       .catch((err) => Promise.reject(err))
     },
     [types.DELETE_CONCURSO] ({commit}, payload) {
-      axiosInstance().delete(`http://localhost:5000/api/concursos/${payload}`)
+      axiosInstance().delete(`http://ec2-34-203-198-65.compute-1.amazonaws.com:5000/api/concursos/${payload}`)
       .then((res) => {
         console.log(`concurso ${payload} deletado`)
       })

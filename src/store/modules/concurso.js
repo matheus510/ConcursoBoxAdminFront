@@ -13,7 +13,7 @@ const getters = {
 
 const actions = {
   [types.SET_CURRENT_CONCURSO]: ({ commit }, payload) => {
-    axios.get(`http://localhost:5000/api/concursos/${payload.concursoId}`)
+    axios.get(`http://ec2-34-203-198-65.compute-1.amazonaws.com:5000/api/concursos/${payload.concursoId}`)
       .then(function (res) {
         commit(`${types.SET_CURRENT_CONCURSO}`, res.data)
       })
